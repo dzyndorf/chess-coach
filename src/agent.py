@@ -2,16 +2,17 @@ from __future__ import annotations
 
 import json
 from concurrent.futures import ThreadPoolExecutor
-from typing import Any, TypedDict
+from typing import Any
 
 import chess
+from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_openai import ChatOpenAI
 from langgraph.graph import END, START, StateGraph
 
 from .config import ENGINE_DEPTH
 from .engine_handler import ChessEngine
 from .maia_handler import MaiaEngine
+from .state_schema import CoachGraphState
 
 COACH_PROMPT = """You are a Grandmaster chess coach.
 Translate engine evaluations into practical advice that exactly matches the student's level.
@@ -36,15 +37,7 @@ Do not include any text outside JSON.
 """
 
 
-class CoachState(TypedDict, total=False):
-    input_fen: str
-    user_elo: int
-    board: chess.Board
-    move_history: list[str]
-    engine_result: dict[str, Any]
-    maia_result: dict[str, Any] | None
-    comparison_result: dict[str, Any] | None
-    coaching_summary: dict[str, Any]
+CoachState = CoachGraphState
 
 
 def _first_move_uci(lines: list[dict[str, Any]]) -> str:
@@ -164,7 +157,7 @@ def _fallback_summary(state: CoachState) -> dict[str, Any]:
     }
 
 
-def generate_coaching_advice(state: CoachState, llm: ChatOpenAI | None) -> CoachState:
+def generate_coaching_advice(state: CoachState, llm: BaseChatModel | None) -> CoachState:
     if llm is None:
         return {"coaching_summary": _fallback_summary(state)}
 
@@ -198,7 +191,7 @@ def user_interaction(state: CoachState) -> CoachState:
 
 def build_agent_graph(
     engine: ChessEngine,
-    llm: ChatOpenAI | None,
+    llm: BaseChatModel | None,
     maia_engine: MaiaEngine | None = None,
 ):
     graph = StateGraph(CoachState)

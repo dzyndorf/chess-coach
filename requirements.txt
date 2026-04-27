@@ -1,6 +1,7 @@
 python-chess
 langgraph
 langchain-openai
+langchain-google-genai
 stockfish
 python-dotenv
 fastapi

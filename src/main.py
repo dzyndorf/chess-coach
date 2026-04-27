@@ -4,19 +4,16 @@ import argparse
 import json
 from typing import Callable
 
-from langchain_openai import ChatOpenAI
-
 from .agent import build_agent_graph
-from .config import OPENAI_API_KEY, OPENAI_MODEL, STOCKFISH_PATH
+from .config import STOCKFISH_PATH
 from .engine_handler import ChessEngine
+from .llm_factory import build_chat_llm
 from .maia_handler import MaiaEngine
 from .utils import board_from_input, render_board
 
 
-def _build_llm() -> ChatOpenAI | None:
-    if not OPENAI_API_KEY:
-        return None
-    return ChatOpenAI(model=OPENAI_MODEL, api_key=OPENAI_API_KEY, temperature=0)
+def _build_llm():
+    return build_chat_llm()
 
 
 def run_coach(*, fen: str | None, pgn: str | None, elo: int) -> dict:
