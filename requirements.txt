@@ -1,0 +1,9 @@
+python-chess
+langgraph
+langchain-openai
+stockfish
+python-dotenv
+fastapi
+uvicorn
+streamlit
+maia2
