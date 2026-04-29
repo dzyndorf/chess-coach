@@ -87,17 +87,6 @@ Every response aims to include:
 
 ---
 
-## Summer 2026 Roadmap
-
-| Month | Milestone | Unlock |
-|---|---|---|
-| June | Reasoning Layer Foundation (Maia + Stockfish benchmarking) | Reliable alignment signals: humanly-optimal vs human-trap |
-| July | UX & Value Statements (Enhanced UI/Loader experience) | Smoother coaching sessions and clearer product trust signals |
-| August | Socratic Contextual Depth (Hybrid eligibility/validity logic) | Deeper question-led teaching with better explanation quality |
-| September | Universal Game Analysis (Handling all game sets and edge cases) | Scalable analysis across broad PGN/FEN inputs and atypical positions |
-
----
-
 ## Technical Stack
 
 ### Backend
