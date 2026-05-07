@@ -431,9 +431,3 @@ For this project, **LangGraph coordinates the reasoning flow today**, while **MC
 
 ---
 
-## Quickstart
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
